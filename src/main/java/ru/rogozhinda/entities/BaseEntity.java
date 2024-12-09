@@ -6,16 +6,15 @@ import jakarta.persistence.*;
 @MappedSuperclass
 public abstract class BaseEntity {
 
-    protected int id;
+    protected String id;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public int getId() {
+    @GeneratedValue(strategy = GenerationType.UUID)
+    public String getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(String id) {
         this.id = id;
     }
 }
