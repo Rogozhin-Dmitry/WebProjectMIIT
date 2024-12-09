@@ -30,11 +30,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(UserRegistrationDto registrationDTO) {
-        if (!registrationDTO.password().equals(registrationDTO.confirmPassword())) {
+        if (!registrationDTO.getPassword().equals(registrationDTO.getConfirmPassword())) {
             throw new RuntimeException("passwords.match");  // TODO добавить красивые эксепшены
         }
 
-        Optional<User> byEmail = this.userRepository.findByEmail(registrationDTO.email());
+        Optional<User> byEmail = this.userRepository.findByEmail(registrationDTO.getEmail());
 
         if (byEmail.isPresent()) {
             throw new RuntimeException("email.used");
@@ -44,11 +44,11 @@ public class AuthServiceImpl implements AuthService {
                 findRoleByName(UserRoles.USER).orElseThrow();
 
         User user = new User(
-                registrationDTO.username(),
-                passwordEncoder.encode(registrationDTO.password()),
-                registrationDTO.email(),
-                registrationDTO.fullname(),
-                registrationDTO.age()
+                registrationDTO.getUsername(),
+                passwordEncoder.encode(registrationDTO.getPassword()),
+                registrationDTO.getEmail(),
+                registrationDTO.getFullname(),
+                registrationDTO.getAge()
         );
 
         user.setRoles(List.of(userRole));
