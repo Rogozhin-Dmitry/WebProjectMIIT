@@ -3,9 +3,9 @@ package ru.rogozhinda.services;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ru.rogozhinda.dto.driver.DriverDetailsViewModel;
+import ru.rogozhinda.dto.driver.DriverEditForm;
 import ru.rogozhinda.dto.driver.DriverViewModel;
 import ru.rogozhinda.entities.Driver;
-
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface DriverService {
 
     DriverDetailsViewModel getDriver(Integer id);
 
-    DriverDetailsViewModel createDriver(Driver driver);
+    DriverDetailsViewModel createDriver(DriverEditForm driverEditForm);
 
     void deleteDriver(Integer id);
 
