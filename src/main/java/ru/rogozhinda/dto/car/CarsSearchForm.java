@@ -1,12 +1,20 @@
 package ru.rogozhinda.dto.car;
 
-import jakarta.validation.constraints.Min;
+public class CarsSearchForm {
+    public String searchTerm;
 
-public record CarsSearchForm(
-String searchTerm,
-@Min(value = 0, message = "Страница должна быть больше 0")
-Integer page,
-@Min(value = 1, message = "Размер страницы должен быть больше 0")
-Integer size
-) {
+    public CarsSearchForm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public CarsSearchForm() {
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
 }

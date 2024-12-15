@@ -1,23 +1,35 @@
 package ru.rogozhinda.controllers;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.rogozhinda.dto.car.CarCreateForm;
-import ru.rogozhinda.dto.car.CarEditForm;
 import ru.rogozhinda.dto.car.CarsSearchForm;
 
 // Контракт контроллера гоночных машин
 @RequestMapping("/cars")
-public interface CarController extends BaseController {
+public interface CarController {
     /**
      * Отображает список гоночных машин с фильтрацией и пагинацией.
      */
     @GetMapping
     String listCars(
-            @ModelAttribute("form") CarsSearchForm form,
+            @RequestParam(defaultValue = "0") @Min(0) Integer page,
             Model model
+    );
+
+    /**
+     * Получает запрос для фильтрации.
+     */
+    @PostMapping
+    String listCarsSearch(
+            @ModelAttribute("carsSearchForm") CarsSearchForm form,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -40,9 +52,10 @@ public interface CarController extends BaseController {
      */
     @PostMapping("/create")
     String create(
-            @Valid @ModelAttribute("form") CarCreateForm form,
+            @Valid CarCreateForm carCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -60,9 +73,10 @@ public interface CarController extends BaseController {
     @PostMapping("/{id}/edit")
     String edit(
             @PathVariable String id,
-            @Valid @ModelAttribute("form") CarEditForm form,
+            @Valid @ModelAttribute("carCreateForm") CarCreateForm carCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**

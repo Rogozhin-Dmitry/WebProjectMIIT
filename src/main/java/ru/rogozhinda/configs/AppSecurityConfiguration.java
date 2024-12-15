@@ -36,6 +36,9 @@ public class AppSecurityConfiguration {
                                         .permitAll()
                                         .requestMatchers("/favicon.ico").permitAll()
                                         .requestMatchers("/error").permitAll()
+                                        .requestMatchers("/*").permitAll()
+                                        .requestMatchers("/*/*").permitAll()
+                                        .requestMatchers("/*/*/*").permitAll()
                                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error")
                                         .permitAll().
                                         requestMatchers("/users/profile").authenticated().
