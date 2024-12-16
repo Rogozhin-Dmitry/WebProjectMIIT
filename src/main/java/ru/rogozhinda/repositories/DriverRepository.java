@@ -19,4 +19,6 @@ public interface DriverRepository extends CrudRepository<Driver, String> {
 
     @Query("SELECT d FROM Driver d WHERE LOWER(d.name) LIKE %:query%")
     Page<Driver> findByFilter(Pageable pageable, @Param("query") String query);
+
+    List<Driver> findAll();
 }

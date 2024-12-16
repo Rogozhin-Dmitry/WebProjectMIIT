@@ -14,7 +14,7 @@ public interface RaceTeamController {
      * Отображает форму создания промежуточной таблицы.
      */
     @GetMapping("/create")
-    String createForm(Model model);
+    String createForm(Model model, @RequestParam("raceId") String raceId);
 
     /**
      * Обрабатывает создание новой промежуточной таблицы.
@@ -24,6 +24,7 @@ public interface RaceTeamController {
             @Valid RaceTeamCreateForm raceteamCreateForm,
             BindingResult bindingResult,
             Model model,
+            @RequestParam("raceId") String raceId,
             RedirectAttributes redirectAttributes
     );
 

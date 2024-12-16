@@ -15,6 +15,21 @@
                 <h4 th:text="'Дата проведения: ' + ${ raceDetails.race.date}"></h4>
                 <h4 th:text="'Название трассы: ' + ${ raceDetails.circuit}"></h4>
                 <h4 th:text="'Список телеканалов: ' + ${ raceDetails.broadcasters}"></h4>
+
+
+                <div class="card my-2">
+                    <div class="card-body" th:if="${not #lists.isEmpty(raceDetails.raceTeams)}" th:each="raceTeam : ${raceDetails.raceTeams}" >
+                        <div class="d-flex flex-column bg-text mb-3">
+                            <h5 th:text="'Название: ' + ${raceTeam.team.name} + ', страна: ' + ${raceTeam.team.country}"></h5>
+                            <h5 th:text="'Имя: ' + ${raceTeam.driver.name} + ', возраст: ' + ${raceTeam.driver.age} + ', национальность: ' + ${raceTeam.driver.nationality}"></h5>
+                            <h5 th:text="'Модель: ' + ${raceTeam.car.model} + ', Год выпуска: ' + ${raceTeam.car.year}"></h5>
+                        </div>
+                    </div>
+                    <div class="card-body" th:unless="${not #lists.isEmpty(raceDetails.raceTeams)}">
+                        <h4>Участников пока нет</h4>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -26,6 +41,10 @@
             <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
                     class="btn btn-warning align-bottom"
                     th:href="@{/races/{id}/edit(id=${raceDetails.race.id})}">Изменить гонку</a>
+            </div>
+            <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
+                    class="btn btn-warning align-bottom"
+                    th:href="@{/raceteams/create(raceId=${raceDetails.race.id})}">Добавить участника</a>
             </div>
         </div>
 

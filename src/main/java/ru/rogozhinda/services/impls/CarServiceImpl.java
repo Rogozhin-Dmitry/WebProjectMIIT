@@ -7,9 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.car.*;
-import ru.rogozhinda.dto.driver.DriverSmallViewModel;
 import ru.rogozhinda.entities.Car;
-import ru.rogozhinda.entities.Driver;
 import ru.rogozhinda.entities.Team;
 import ru.rogozhinda.repositories.CarRepository;
 import ru.rogozhinda.services.CarService;
@@ -85,6 +83,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<CarSmallViewModel> getCarsSmall() {
         return carRepository.findCarsWithoutTeam().stream().map(car -> mapper.map(car, CarSmallViewModel.class)).toList();
+    }
+
+    @Override
+    public List<CarSmallViewModel> getCarsSmallAll() {
+        return carRepository.findAll().stream().map(car -> mapper.map(car, CarSmallViewModel.class)).toList();
     }
 
     @Override

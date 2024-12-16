@@ -10,6 +10,7 @@ import ru.rogozhinda.dto.race.RaceCreateForm;
 import ru.rogozhinda.dto.race.RaceDetailsViewModel;
 import ru.rogozhinda.dto.race.RaceViewModel;
 import ru.rogozhinda.dto.race.RacesSearchForm;
+import ru.rogozhinda.dto.raceteam.RaceTeamViewModel;
 import ru.rogozhinda.entities.Race;
 import ru.rogozhinda.repositories.RaceRepository;
 import ru.rogozhinda.services.RaceService;
@@ -85,6 +86,7 @@ public class RaceServiceImpl implements RaceService {
     private RaceDetailsViewModel mapRaceDetail(Race race) {
         BaseViewModel title = new BaseViewModel(race.getName());
         RaceViewModel model = mapper.map(race, RaceViewModel.class);
-        return new RaceDetailsViewModel(title, model, race.getCircuit(), race.getBroadcasters());
+        List<RaceTeamViewModel> raceTeams = race.getRaceTeams().stream().map(raceTeam -> mapper.map(raceTeam, RaceTeamViewModel.class)).toList();
+        return new RaceDetailsViewModel(title, model, race.getCircuit(), race.getBroadcasters(), raceTeams);
     }
 }

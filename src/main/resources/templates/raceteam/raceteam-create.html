@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+
+<main>
+    <div class="container">
+        <div class="card mt-5 mb-5">
+            <div class="card-header bg-transparent h2">Создание участника гонки</div>
+            <div class="card-body">
+                <form th:action="@{/raceteams/create(raceId=${raceId})}"
+                      th:method="post"
+                      th:object="${raceteamCreateForm}"
+                      class="m-md-auto w-50 pb-3">
+
+                    <div class="card my-2">
+                        <div class="card-header bg-transparent">Команды:</div>
+                        <div class="card-body" th:if="${not #lists.isEmpty(teamsList)}">
+                            <div th:each="team : ${teamsList}" class="d-flex flex-column bg-text mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" th:id="${team.id}"
+                                           th:field="*{teamId}" th:value="${team.id}">
+                                    <label class="form-check-label"
+                                           th:text="'Название: ' + ${team.name} + ', страна: ' + ${team.country}"></label>
+                                </div>
+                            </div>
+                            <small th:if="${#fields.hasErrors('teamId')}" th:errors="*{teamId}" class="text-danger">Error
+                                message</small>
+                        </div>
+                        <div class="card-body" th:unless="${not #lists.isEmpty(teamsList)}">
+                            <h4>Команд не найдено</h4>
+                        </div>
+                    </div>
+
+                    <div class="card my-2">
+                        <div class="card-header bg-transparent">Пилоты:</div>
+                        <div class="card-body" th:if="${not #lists.isEmpty(driversList)}">
+                            <div th:each="driver : ${driversList}" class="d-flex flex-column bg-text mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" th:id="${driver.id}"
+                                           th:field="*{driverId}" th:value="${driver.id}">
+                                    <label class="form-check-label"
+                                           th:text="'Имя: ' + ${driver.name} + ', возраст: ' + ${driver.age} + ', национальность: ' + ${driver.nationality}"></label>
+                                </div>
+                            </div>
+                            <small th:if="${#fields.hasErrors('driverId')}" th:errors="*{driverId}" class="text-danger">Error
+                                message</small>
+                        </div>
+                        <div class="card-body" th:unless="${not #lists.isEmpty(driversList)}">
+                            <h4>Пилотов не найдено</h4>
+                        </div>
+                    </div>
+
+                    <div class="card my-2">
+                        <div class="card-header bg-transparent">Машины:</div>
+                        <div class="card-body" th:if="${not #lists.isEmpty(carsList)}">
+                            <div th:each="car : ${carsList}" class="d-flex flex-column bg-text mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" th:id="${car.id}"
+                                           th:field="*{carId}" th:value="${car.id}">
+                                    <label class="form-check-label"
+                                           th:text="'Модель: ' + ${car.model} + ', Год выпуска: ' + ${car.year}"></label>
+                                </div>
+                            </div>
+                            <small th:if="${#fields.hasErrors('carId')}" th:errors="*{carId}" class="text-danger">Error
+                                message</small>
+                        </div>
+                        <div class="card-body" th:unless="${not #lists.isEmpty(carsList)}">
+                            <h4>Машин не найдено</h4>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Создать промежуточную таблицу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

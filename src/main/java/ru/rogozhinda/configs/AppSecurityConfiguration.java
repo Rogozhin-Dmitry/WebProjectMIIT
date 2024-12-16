@@ -42,8 +42,8 @@ public class AppSecurityConfiguration {
                                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error")
                                         .permitAll().
                                         requestMatchers("/users/profile").authenticated().
-                                        requestMatchers("/employees/add", "/employees/employee-delete/").hasAnyRole(UserRoles.MODERATOR.name(), UserRoles.ADMIN.name()).
-                                        requestMatchers("/companies/company-delete/").hasRole(UserRoles.ADMIN.name()).
+//                                        requestMatchers("/employees/add", "/employees/employee-delete/").hasAnyRole(UserRoles.MODERATOR.name(), UserRoles.ADMIN.name()).
+//                                        requestMatchers("/companies/company-delete/").hasRole(UserRoles.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(

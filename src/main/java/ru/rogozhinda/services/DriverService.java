@@ -15,6 +15,8 @@ public interface DriverService {
 
     List<DriverSmallViewModel> getDriversSmall();
 
+    List<DriverSmallViewModel> getDriversSmallAll();
+
     long countDrivers();
 
     DriverDetailsViewModel getDriver(String id);

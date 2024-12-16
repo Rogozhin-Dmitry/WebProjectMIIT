@@ -29,5 +29,7 @@ public interface CarService {
 
     List<CarSmallViewModel> getCarsSmall();
 
+    List<CarSmallViewModel> getCarsSmallAll();
+
     void setCars(Team team, List<String> teamCarsIds);
 }

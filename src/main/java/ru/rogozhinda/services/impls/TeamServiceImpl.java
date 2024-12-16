@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.car.CarSmallViewModel;
 import ru.rogozhinda.dto.driver.DriverSmallViewModel;
-import ru.rogozhinda.dto.team.TeamCreateForm;
-import ru.rogozhinda.dto.team.TeamDetailsViewModel;
-import ru.rogozhinda.dto.team.TeamViewModel;
-import ru.rogozhinda.dto.team.TeamsSearchForm;
+import ru.rogozhinda.dto.team.*;
 import ru.rogozhinda.entities.Team;
 import ru.rogozhinda.repositories.TeamRepository;
 import ru.rogozhinda.services.CarService;
@@ -44,6 +41,11 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Page<TeamViewModel> getTeamsByFilter(Pageable pageable, TeamsSearchForm form) {
         return teamRepository.findByFilter(pageable, form.getSearchTerm()).map(team -> mapper.map(team, TeamViewModel.class));
+    }
+
+    @Override
+    public List<TeamSmallViewModel> getTeamsSmallAll() {
+        return teamRepository.findAll().stream().map(team -> mapper.map(team, TeamSmallViewModel.class)).toList();
     }
 
     @Override
@@ -95,8 +97,8 @@ public class TeamServiceImpl implements TeamService {
     private TeamDetailsViewModel mapTeamDetail(Team team) {
         BaseViewModel title = new BaseViewModel(team.getName());
         TeamViewModel model = mapper.map(team, TeamViewModel.class);
-        List<DriverSmallViewModel> drivers = team.getDrivers().stream().map(driver ->  mapper.map(driver, DriverSmallViewModel.class)).toList();
-        List<CarSmallViewModel> cars = team.getCars().stream().map(car ->  mapper.map(car, CarSmallViewModel.class)).toList();
+        List<DriverSmallViewModel> drivers = team.getDrivers().stream().map(driver -> mapper.map(driver, DriverSmallViewModel.class)).toList();
+        List<CarSmallViewModel> cars = team.getCars().stream().map(car -> mapper.map(car, CarSmallViewModel.class)).toList();
 
         return new TeamDetailsViewModel(title, model, drivers, cars);
     }

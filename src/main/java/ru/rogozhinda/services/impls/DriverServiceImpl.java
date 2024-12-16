@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.driver.*;
+import ru.rogozhinda.dto.team.TeamSmallViewModel;
 import ru.rogozhinda.entities.Driver;
 import ru.rogozhinda.entities.Team;
 import ru.rogozhinda.repositories.DriverRepository;
@@ -39,6 +40,11 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public List<DriverSmallViewModel> getDriversSmall() {
         return driverRepository.findDriversWithoutTeam().stream().map(driver -> mapper.map(driver, DriverSmallViewModel.class)).toList();
+    }
+
+    @Override
+    public List<DriverSmallViewModel> getDriversSmallAll() {
+        return driverRepository.findAll().stream().map(driver -> mapper.map(driver, DriverSmallViewModel.class)).toList();
     }
 
     @Override
