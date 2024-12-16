@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+
+<main>
+    <div class="container">
+        <div class="card mt-5 mb-5">
+            <div class="card-header bg-transparent h2">Создание команду</div>
+            <div class="card-body">
+                <form th:action="@{/teams/create}"
+                      th:method="post"
+                      th:object="${teamCreateForm}"
+                      class="m-md-auto w-50 pb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Название:</label>
+                        <input th:field="*{name}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="name" aria-describedby="nameHelp"
+                               name="name"/>
+                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="country">Страна основания:</label>
+                        <input th:field="*{country}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="country" aria-describedby="countryHelp"
+                               name="country"/>
+                        <small th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="trophies">Количество трофеев:</label>
+                        <input th:field="*{trophies}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="trophies"
+                               aria-describedby="trophiesHelp"
+                               name="trophies"/>
+                        <small th:if="${#fields.hasErrors('trophies')}" th:errors="*{trophies}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="points">Количество очков:</label>
+                        <input th:field="*{points}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="points" aria-describedby="pointsHelp"
+                               name="points"/>
+                        <small th:if="${#fields.hasErrors('points')}" th:errors="*{points}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="founded">Дата основания:</label>
+                        <input th:field="*{founded}"
+                               th:errorclass="is-invalid"
+                               type="date" class="form-control text-center" id="founded" aria-describedby="foundedHelp"
+                               name="founded"/>
+                        <small th:if="${#fields.hasErrors('founded')}" th:errors="*{founded}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="card my-2">
+                        <div class="card-header bg-transparent">Гонщики:</div>
+                        <div class="card-body" th:if="${not #lists.isEmpty(driversList)}">
+                            <div th:each="driver, index : ${driversList}" class="d-flex flex-column bg-text mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:id="${driver.id}"
+                                           th:field="*{driverIds[__${index.index}__]}">
+                                    <label class="form-check-label"
+                                           th:text="'Имя: ' + ${driver.name} + ', возраст: ' + ${driver.age} + ', национальность: ' + ${driver.nationality}"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" th:unless="${not #lists.isEmpty(driversList)}">
+                            <h4>Свободных гонщиков не найдено</h4>
+                        </div>
+                    </div>
+
+                    <div class="card my-2">
+                        <div class="card-header bg-transparent">Машины:</div>
+                        <div class="card-body" th:if="${not #lists.isEmpty(carsList)}">
+                            <div th:each="car, index : ${carsList}" class="d-flex flex-column bg-text mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" th:id="${car.id}"
+                                           th:field="*{carIds[__${index.index}__]}">
+                                    <label class="form-check-label"
+                                           th:text="'Модель: ' + ${ car.model} + ', Год выпуска: ' + ${car.year}"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" th:unless="${not #lists.isEmpty(carsList)}">
+                            <h4>Свободных машин не найдено</h4>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Создать команду</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

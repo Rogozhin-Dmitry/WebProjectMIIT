@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main>
+    <div class="container">
+        <div class="card mt-5 mb-5">
+            <div class="card-header bg-transparent h2">Информация о результате</div>
+            <div class="card-body">
+                <h4 th:text="'Позиция: ' + ${resultDetails.result.position}"></h4>
+                <h4 th:text="'Время прохождения гонки: ' + ${resultDetails.result.time}"></h4>
+                <h4 th:text="'Количество кругов: ' + ${resultDetails.laps}"></h4>
+                <h4 th:text="'Лучшее время круга: ' + ${resultDetails.lapTime}"></h4>
+                <h4 th:text="'Отставание от лидера: ' + ${resultDetails.gap}"></h4>
+                <h4 th:text="'Очки: ' + ${resultDetails.points}"></h4>
+                <h4 th:text="'Статус: ' + ${resultDetails.status}"></h4>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row-reverse">
+            <div class="align-bottom" sec:authorize="hasAnyRole('ADMIN')"><a
+                    class="btn btn-danger align-bottom"
+                    th:href="@{/results/{id}/delete(id=${resultDetails.result.id})}">Удалить результат</a>
+            </div>
+            <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
+                    class="btn btn-warning align-bottom"
+                    th:href="@{/results/{id}/edit(id=${resultDetails.result.id})}">Изменить результат</a>
+            </div>
+        </div>
+
+    </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

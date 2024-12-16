@@ -1,23 +1,35 @@
 package ru.rogozhinda.controllers;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.rogozhinda.dto.driver.DriverCreateForm;
-import ru.rogozhinda.dto.driver.DriverEditForm;
 import ru.rogozhinda.dto.driver.DriversSearchForm;
 
 // Контракт контроллера водителей
 @RequestMapping("/drivers")
-public interface DriverController extends BaseController {
+public interface DriverController {
     /**
      * Отображает список водителей с фильтрацией и пагинацией.
      */
     @GetMapping
     String listDrivers(
-            @ModelAttribute("form") DriversSearchForm form,
+            @RequestParam(defaultValue = "0") @Min(0) Integer page,
             Model model
+    );
+
+    /**
+     * Получает запрос для фильтрации.
+     */
+    @PostMapping
+    String listDriversSearch(
+            @ModelAttribute("driversSearchForm") DriversSearchForm form,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -40,9 +52,10 @@ public interface DriverController extends BaseController {
      */
     @PostMapping("/create")
     String create(
-            @Valid @ModelAttribute("form") DriverCreateForm form,
+            @Valid DriverCreateForm driverCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -60,9 +73,10 @@ public interface DriverController extends BaseController {
     @PostMapping("/{id}/edit")
     String edit(
             @PathVariable String id,
-            @Valid @ModelAttribute("form") DriverEditForm form,
+            @Valid @ModelAttribute("driverCreateForm") DriverCreateForm driverCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import ru.rogozhinda.entities.RaceTeam;
 
 @Repository
-public interface RaceTeamRepository extends CrudRepository<RaceTeam, Integer> {
+public interface RaceTeamRepository extends CrudRepository<RaceTeam, String> {
     Page<RaceTeam> findAll(Pageable pageable);
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+
+<main>
+    <div class="container">
+        <div class="card mt-5 mb-5">
+            <div class="card-header bg-transparent h2">Создание водителя</div>
+            <div class="card-body">
+                <form th:action="@{/drivers/create}"
+                      th:method="post"
+                      th:object="${driverCreateForm}"
+                      class="m-md-auto w-50 pb-3">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Имя:</label>
+                        <input th:field="*{name}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="name" aria-describedby="nameHelp"
+                               name="name"/>
+                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="age">Возраст:</label>
+                        <input th:field="*{age}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="age" aria-describedby="ageHelp"
+                               name="age"/>
+                        <small th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="nationality">Национальность:</label>
+                        <input th:field="*{nationality}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="nationality" aria-describedby="nationalityHelp"
+                               name="nationality"/>
+                        <small th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="number">Номер:</label>
+                        <input th:field="*{number}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="number" aria-describedby="numberHelp"
+                               name="number"/>
+                        <small th:if="${#fields.hasErrors('number')}" th:errors="*{number}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="points">Количество очков:</label>
+                        <input th:field="*{points}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="points" aria-describedby="pointsHelp"
+                               name="points"/>
+                        <small th:if="${#fields.hasErrors('points')}" th:errors="*{points}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="height">Рост:</label>
+                        <input th:field="*{height}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="height" aria-describedby="heightHelp"
+                               name="height"/>
+                        <small th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="weight">Вес:</label>
+                        <input th:field="*{weight}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="weight" aria-describedby="weightHelp"
+                               name="weight"/>
+                        <small th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="birthday">День рождения:</label>
+                        <input th:field="*{birthday}"
+                               th:errorclass="is-invalid"
+                               type="date" class="form-control text-center" id="birthday" aria-describedby="birthdayHelp"
+                               name="birthday"/>
+                        <small th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}" class="text-danger">Error
+                            message</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Создать водителя</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

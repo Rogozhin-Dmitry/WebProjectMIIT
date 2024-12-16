@@ -30,8 +30,10 @@ public class CarControllerImpl implements CarController {
         if (carsSearchForm == null) {
             carsSearchForm = new CarsSearchForm();
             carList = carService.getCars(PageRequest.of(page, pageSize));
-            if (carList.isEmpty()) {
+            if (carList.isEmpty() && page != 0) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
+            } else if (carList.isEmpty() && page == 0) {
+                model.addAttribute("carsSearchError", "not found");
             }
         } else {
             carList = carService.getCarsByFilter(PageRequest.of(page, pageSize), carsSearchForm);

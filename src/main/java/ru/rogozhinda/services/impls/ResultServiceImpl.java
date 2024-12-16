@@ -1,50 +1,78 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ru.rogozhinda.dto.base.BaseViewModel;
+import ru.rogozhinda.dto.result.ResultCreateForm;
 import ru.rogozhinda.dto.result.ResultDetailsViewModel;
-import ru.rogozhinda.dto.result.ResultEditForm;
 import ru.rogozhinda.dto.result.ResultViewModel;
 import ru.rogozhinda.entities.Result;
 import ru.rogozhinda.repositories.ResultRepository;
 import ru.rogozhinda.services.ResultService;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
     private final ModelMapper mapper;
 
-    public ResultServiceImpl(ResultRepository resultRepository, ModelMapper mapper) {
+    @Autowired
+    public ResultServiceImpl(ResultRepository resultRepository) {
         this.resultRepository = resultRepository;
-        this.mapper = mapper;
+        this.mapper = new ModelMapper();
     }
 
     @Override
-    public Page<ResultViewModel> getResults(Pageable pageable) {
-        return resultRepository.findAll(pageable).map(result -> mapper.map(result, ResultViewModel.class));
+    public ResultDetailsViewModel getResult(String id) {
+        Optional<Result> resultOptional = resultRepository.findById(id);
+        if (resultOptional.isPresent()) {
+            Result result = resultOptional.get();
+            return mapResultDetail(result);
+        } else {
+            return null;
+        }
     }
 
     @Override
-    public ResultDetailsViewModel getResult(Integer id) {
-        return mapper.map(resultRepository.findById(id), ResultDetailsViewModel.class);
+    public ResultCreateForm getEditResult(String id) {
+        return mapper.map(resultRepository.findById(id), ResultCreateForm.class);
     }
 
     @Override
-    public ResultDetailsViewModel createResult(ResultEditForm resultEditForm) {
-        Result result = mapper.map(resultEditForm, Result.class);
-        result = resultRepository.save(result);
-        return mapper.map(result, ResultDetailsViewModel.class);
+    public void editResult(String id, ResultCreateForm resultCreateForm) {
+        Result result = mapper.map(resultCreateForm, Result.class);
+        result.setId(id);
+        resultRepository.save(result);
     }
 
     @Override
-    public void deleteResult(Integer id) {
+    public void createResult(ResultCreateForm resultCreateForm) {
+        Result result = mapper.map(resultCreateForm, Result.class);
+        resultRepository.save(result);
+    }
+
+    @Override
+    public void deleteResult(String id) {
         resultRepository.deleteById(id);
     }
 
     @Override
-    public void saveAllResults(List<Result> books) {
+    public void saveAllResults(List<Result> results) {
+        resultRepository.saveAll(results);
+    }
 
+    private ResultDetailsViewModel mapResultDetail(Result result) {
+        BaseViewModel title = new BaseViewModel(result.getStatus());
+        ResultViewModel model = mapper.map(result, ResultViewModel.class);
+        return new ResultDetailsViewModel(
+                title, model,
+                result.getLaps(),
+                result.getLapTime(),
+                result.getGap(),
+                result.getPoints(),
+                result.getStatus());
     }
 }

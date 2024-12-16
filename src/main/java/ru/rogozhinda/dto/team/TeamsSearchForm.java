@@ -1,12 +1,20 @@
 package ru.rogozhinda.dto.team;
 
-import jakarta.validation.constraints.Min;
+public class TeamsSearchForm {
+    public String searchTerm;
 
-public record TeamsSearchForm(
-String searchTerm,
-@Min(value = 0, message = "Страница должна быть больше 0")
-Integer page,
-@Min(value = 1, message = "Размер страницы должен быть больше 0")
-Integer size
-) {
+    public TeamsSearchForm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
+
+    public TeamsSearchForm() {
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
+    }
 }

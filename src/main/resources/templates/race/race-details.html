@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-100" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/head"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="fragments/navbar">Navbar</div>
+<main>
+    <div class="container">
+        <div class="card mt-5 mb-5">
+            <div class="card-header bg-transparent h2">Информация о гонке</div>
+            <div class="card-body">
+                <h4 th:text="'Название: ' + ${ raceDetails.race.name}"></h4>
+                <h4 th:text="'Место проведения: ' + ${ raceDetails.race.location}"></h4>
+                <h4 th:text="'Длительность: ' + ${ raceDetails.race.duration}"></h4>
+                <h4 th:text="'Дата проведения: ' + ${ raceDetails.race.date}"></h4>
+                <h4 th:text="'Название трассы: ' + ${ raceDetails.circuit}"></h4>
+                <h4 th:text="'Список телеканалов: ' + ${ raceDetails.broadcasters}"></h4>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row-reverse">
+            <div class="align-bottom" sec:authorize="hasAnyRole('ADMIN')"><a
+                    class="btn btn-danger align-bottom"
+                    th:href="@{/races/{id}/delete(id=${raceDetails.race.id})}">Удалить гонку</a>
+            </div>
+            <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
+                    class="btn btn-warning align-bottom"
+                    th:href="@{/races/{id}/edit(id=${raceDetails.race.id})}">Изменить гонку</a>
+            </div>
+        </div>
+
+    </div>
+</main>
+<footer th:replace="fragments/footer"/>
+</body>
+</html>

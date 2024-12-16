@@ -1,23 +1,35 @@
 package ru.rogozhinda.controllers;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.rogozhinda.dto.race.RaceCreateForm;
-import ru.rogozhinda.dto.race.RaceEditForm;
 import ru.rogozhinda.dto.race.RacesSearchForm;
 
 // Контракт контроллера гонок
 @RequestMapping("/races")
-public interface RaceController extends BaseController {
+public interface RaceController {
     /**
      * Отображает список гонок с фильтрацией и пагинацией.
      */
     @GetMapping
     String listRaces(
-            @ModelAttribute("form") RacesSearchForm form,
+            @RequestParam(defaultValue = "0") @Min(0) Integer page,
             Model model
+    );
+
+    /**
+     * Получает запрос для фильтрации.
+     */
+    @PostMapping
+    String listRacesSearch(
+            @ModelAttribute("racesSearchForm") RacesSearchForm form,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -40,9 +52,10 @@ public interface RaceController extends BaseController {
      */
     @PostMapping("/create")
     String create(
-            @Valid @ModelAttribute("form") RaceCreateForm form,
+            @Valid RaceCreateForm raceCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -60,9 +73,10 @@ public interface RaceController extends BaseController {
     @PostMapping("/{id}/edit")
     String edit(
             @PathVariable String id,
-            @Valid @ModelAttribute("form") RaceEditForm form,
+            @Valid @ModelAttribute("raceCreateForm") RaceCreateForm raceCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**

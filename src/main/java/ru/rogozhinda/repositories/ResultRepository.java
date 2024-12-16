@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import ru.rogozhinda.entities.Result;
 
 @Repository
-public interface ResultRepository extends CrudRepository<Result, Integer> {
+public interface ResultRepository extends CrudRepository<Result, String> {
     Page<Result> findAll(Pageable pageable);
 }

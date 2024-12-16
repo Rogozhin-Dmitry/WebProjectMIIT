@@ -6,11 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.base.BaseViewModel;
-import ru.rogozhinda.dto.car.CarCreateForm;
-import ru.rogozhinda.dto.car.CarDetailsViewModel;
-import ru.rogozhinda.dto.car.CarViewModel;
-import ru.rogozhinda.dto.car.CarsSearchForm;
+import ru.rogozhinda.dto.car.*;
+import ru.rogozhinda.dto.driver.DriverSmallViewModel;
 import ru.rogozhinda.entities.Car;
+import ru.rogozhinda.entities.Driver;
+import ru.rogozhinda.entities.Team;
 import ru.rogozhinda.repositories.CarRepository;
 import ru.rogozhinda.services.CarService;
 
@@ -79,6 +79,20 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void saveAllCars(List<Car> cars) {
+        carRepository.saveAll(cars);
+    }
+
+    @Override
+    public List<CarSmallViewModel> getCarsSmall() {
+        return carRepository.findCarsWithoutTeam().stream().map(car -> mapper.map(car, CarSmallViewModel.class)).toList();
+    }
+
+    @Override
+    public void setCars(Team team, List<String> teamCarsIds) {
+        Iterable<Car> cars = carRepository.findAllById(teamCarsIds);
+        for (Car car : cars) {
+            car.setTeam(team);
+        }
         carRepository.saveAll(cars);
     }
 

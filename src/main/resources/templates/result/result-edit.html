@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main>
+    <div class="container">
+        <div class="card mt-5 mb-5">
+            <div class="card-header bg-transparent h2">Изменение результат</div>
+            <div class="card-body">
+                <form th:action="@{/results/{id}/edit(id=${resultEditId})}"
+                      th:method="post"
+                      th:object="${resultEditForm}"
+                      class="m-md-auto w-50 pb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="position">Позиция:</label>
+                        <input th:field="*{position}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="position" aria-describedby="positionHelp"
+                               name="position"/>
+                        <small th:if="${#fields.hasErrors('position')}" th:errors="*{position}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="time">Время прохождения гонки:</label>
+                        <input th:field="*{time}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="time" aria-describedby="timeHelp"
+                               name="time"/>
+                        <small th:if="${#fields.hasErrors('time')}" th:errors="*{time}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="laps">Количество кругов:</label>
+                        <input th:field="*{laps}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="laps" aria-describedby="lapsHelp"
+                               name="laps"/>
+                        <small th:if="${#fields.hasErrors('laps')}" th:errors="*{laps}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="lapTime">Лучшее время круга:</label>
+                        <input th:field="*{lapTime}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="lapTime" aria-describedby="lapTimeHelp"
+                               name="lapTime"/>
+                        <small th:if="${#fields.hasErrors('lapTime')}" th:errors="*{lapTime}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="gap">Отставание от лидера:</label>
+                        <input th:field="*{gap}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="gap" aria-describedby="gapHelp"
+                               name="gap"/>
+                        <small th:if="${#fields.hasErrors('gap')}" th:errors="*{gap}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="points">Очки:</label>
+                        <input th:field="*{points}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="points" aria-describedby="pointsHelp"
+                               name="points"/>
+                        <small th:if="${#fields.hasErrors('points')}" th:errors="*{points}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="status">Статус:</label>
+                        <input th:field="*{status}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="status" aria-describedby="statusHelp"
+                               name="status"/>
+                        <small th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <button type="submit" class="btn btn-success">Изменить результат</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+
+<main>
+    <div class="container">
+        <div class="raced mt-5 mb-5">
+            <div class="raced-header bg-transparent h2">Создание гонку</div>
+            <div class="raced-body">
+                <form th:action="@{/races/create}"
+                      th:method="post"
+                      th:object="${raceCreateForm}"
+                      class="m-md-auto w-50 pb-3">
+
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Название:</label>
+                        <input th:field="*{name}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="name" aria-describedby="nameHelp"
+                               name="name"/>
+                        <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Место проведения:</label>
+                        <input th:field="*{location}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="location"
+                               aria-describedby="locationHelp"
+                               name="location"/>
+                        <small th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="duration">Длительность:</label>
+                        <input th:field="*{duration}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="duration"
+                               aria-describedby="durationHelp"
+                               name="duration"/>
+                        <small th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="date">Дата проведения:</label>
+                        <input th:field="*{date}"
+                               th:errorclass="is-invalid"
+                               type="date" class="form-control text-center" id="date" aria-describedby="dateHelp"
+                               name="date"/>
+                        <small th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="circuit">Название трассы:</label>
+                        <input th:field="*{circuit}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="circuit" aria-describedby="circuitHelp"
+                               name="circuit"/>
+                        <small th:if="${#fields.hasErrors('circuit')}" th:errors="*{circuit}" class="text-danger">Error
+                            message</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="broadcasters">Список телеканалов:</label>
+                        <input th:field="*{broadcasters}"
+                               th:errorclass="is-invalid"
+                               type="text" class="form-control text-center" id="broadcasters"
+                               aria-describedby="broadcastersHelp"
+                               name="broadcasters"/>
+                        <small th:if="${#fields.hasErrors('broadcasters')}" th:errors="*{broadcasters}"
+                               class="text-danger">Error
+                            message</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Создать гонку</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

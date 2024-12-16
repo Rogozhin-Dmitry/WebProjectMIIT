@@ -4,27 +4,25 @@
 <body class="d-flex flex-column h-100">
 <div th:replace="~{fragments/navbar}">Navbar</div>
 <main class="flex-shrink-0">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-2"></div>
-      <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
-        <div class="justify-content-center">
-          <h1>Profile</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <main class="jumbotron text-center rounded col-md-12 align-self-center pt-5">
+                <div class="justify-content-center">
+                    <h1>Профиль</h1>
+                </div>
+                <div class="row bg-light rounded">
+                    <div th:object="${user}">
+                        <h4 th:text="'Имя: ' + *{fullName}"></h4>
+                        <h4 th:text="'Никнейм: ' + *{username}"></h4>
+                        <h4 th:text="'Возраст: ' + *{age}"></h4>
+                        <b>Роли пользователя: </b>
+                        <div sec:authentication="principal.authorities"></div>
+                    </div>
+                </div>
+            </main>
         </div>
-        <div class="row bg-light rounded">
-          <div class="col-md-6" th:object="${user}">
-            <h2>User</h2>
-            <h4 th:text="'Full Name: ' + *{fullName}"></h4>
-            <h4 th:text="'Username: ' + *{username}"></h4>
-            <h4 th:text="'Age: ' + *{age}"></h4>
-            <b>User Roles: </b>
-            <div sec:authentication="principal.authorities"></div>
-          </div>
-          <div class="col-md-6"><img src="/pic/employee.png" height="350px"></div>
-        </div>
-      </main>
     </div>
-  </div>
 </main>
 <footer th:replace="~{fragments/footer}"/>
 </body>

@@ -9,14 +9,14 @@
       <div class="col-md-2"></div>
       <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
         <div class="justify-content-center">
-          <h1>Register</h1>
+          <h1>Регистрация</h1>
         </div>
         <form th:action="@{/users/register}"
               th:method="post"
               th:object="${userRegistrationDto}"
               class="m-md-auto w-50 pb-3">
           <div class="mb-3">
-            <label class="form-label" for="username">Username</label>
+            <label class="form-label" for="username">Никнейм</label>
             <input th:field="*{username}"
                    th:errorclass="is-invalid"
                    type="text" class="form-control text-center" id="username" aria-describedby="usernameHelp"
@@ -26,7 +26,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label" for="fullname">Full Name</label>
+            <label class="form-label" for="fullname">Имя</label>
             <input th:field="*{fullname}"
                    th:errorclass="is-invalid"
                    type="text" class="form-control text-center" id="fullname" aria-describedby="fullname"
@@ -47,7 +47,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label" for="age">Age</label>
+            <label class="form-label" for="age">Возраст</label>
             <input th:field="*{age}"
                    th:errorclass="is-invalid"
                    type="number" min="0" class="form-control text-center"
@@ -57,7 +57,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label" for="password">Password</label>
+            <label class="form-label" for="password">Пароль</label>
             <input th:field="*{password}"
                    required minlength="5" maxlength="20"
                    th:errorclass="is-invalid"
@@ -70,7 +70,7 @@
 
 
           <div class="mb-3">
-            <label class="form-label" for="confirmPassword">Confirm password</label>
+            <label class="form-label" for="confirmPassword">Повторите пароль</label>
             <input th:field="*{confirmPassword}"
                    required minlength="5" maxlength="20"
                    th:errorclass="is-invalid"
@@ -81,7 +81,7 @@
               message</small>
           </div>
 
-          <button type="submit" class="btn btn-secondary">Register</button>
+          <button type="submit" class="btn btn-secondary">Зарегистрироваться</button>
         </form>
       </div>
     </div>

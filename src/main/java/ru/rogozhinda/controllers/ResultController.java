@@ -4,12 +4,12 @@ import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.rogozhinda.dto.result.ResultCreateForm;
-import ru.rogozhinda.dto.result.ResultEditForm;
 
 // Контракт контроллера результатов
 @RequestMapping("/results")
-public interface ResultController extends BaseController {
+public interface ResultController {
     /**
      * Отображает детальную информацию о результате.
      */
@@ -30,9 +30,10 @@ public interface ResultController extends BaseController {
      */
     @PostMapping("/create")
     String create(
-            @Valid @ModelAttribute("form") ResultCreateForm form,
+            @Valid ResultCreateForm resultCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -50,9 +51,10 @@ public interface ResultController extends BaseController {
     @PostMapping("/{id}/edit")
     String edit(
             @PathVariable String id,
-            @Valid @ModelAttribute("form") ResultEditForm form,
+            @Valid @ModelAttribute("resultCreateForm") ResultCreateForm resultCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**

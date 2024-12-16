@@ -4,12 +4,12 @@ import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.rogozhinda.dto.raceteam.RaceTeamCreateForm;
-import ru.rogozhinda.dto.raceteam.RaceTeamEditForm;
 
 // Контракт контроллера промежуточной таблицы
 @RequestMapping("/raceteams")
-public interface RaceTeamController extends BaseController {
+public interface RaceTeamController {
     /**
      * Отображает форму создания промежуточной таблицы.
      */
@@ -21,9 +21,10 @@ public interface RaceTeamController extends BaseController {
      */
     @PostMapping("/create")
     String create(
-            @Valid @ModelAttribute("form") RaceTeamCreateForm form,
+            @Valid RaceTeamCreateForm raceteamCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
@@ -41,9 +42,10 @@ public interface RaceTeamController extends BaseController {
     @PostMapping("/{id}/edit")
     String edit(
             @PathVariable String id,
-            @Valid @ModelAttribute("form") RaceTeamEditForm form,
+            @Valid @ModelAttribute("raceteamCreateForm") RaceTeamCreateForm raceteamCreateForm,
             BindingResult bindingResult,
-            Model model
+            Model model,
+            RedirectAttributes redirectAttributes
     );
 
     /**
