@@ -7,7 +7,9 @@ import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.result.ResultCreateForm;
 import ru.rogozhinda.dto.result.ResultDetailsViewModel;
 import ru.rogozhinda.dto.result.ResultViewModel;
+import ru.rogozhinda.entities.RaceTeam;
 import ru.rogozhinda.entities.Result;
+import ru.rogozhinda.repositories.RaceTeamRepository;
 import ru.rogozhinda.repositories.ResultRepository;
 import ru.rogozhinda.services.ResultService;
 
@@ -17,11 +19,14 @@ import java.util.Optional;
 @Service
 public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
+    private final RaceTeamRepository raceTeamRepository;
+
     private final ModelMapper mapper;
 
     @Autowired
-    public ResultServiceImpl(ResultRepository resultRepository) {
+    public ResultServiceImpl(ResultRepository resultRepository, RaceTeamRepository raceTeamRepository) {
         this.resultRepository = resultRepository;
+        this.raceTeamRepository = raceTeamRepository;
         this.mapper = new ModelMapper();
     }
 
@@ -49,9 +54,15 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public void createResult(ResultCreateForm resultCreateForm) {
+    public void createResult(ResultCreateForm resultCreateForm, String raceTeamId) {
         Result result = mapper.map(resultCreateForm, Result.class);
-        resultRepository.save(result);
+        Optional<RaceTeam> raceTeam = raceTeamRepository.findById(raceTeamId);
+        result = resultRepository.save(result);
+        if (raceTeam.isPresent()) {
+            RaceTeam raceTeamObj = raceTeam.get();
+            raceTeamObj.setResult(result);
+            raceTeamRepository.save(raceTeamObj);
+        }
     }
 
     @Override

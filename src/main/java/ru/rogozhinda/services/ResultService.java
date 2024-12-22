@@ -13,7 +13,7 @@ public interface ResultService {
 
     void editResult(String id, ResultCreateForm resultCreateForm);
 
-    void createResult(ResultCreateForm resultCreateForm);
+    void createResult(ResultCreateForm resultCreateForm, String raceTeamId);
 
     void deleteResult(String id);
 

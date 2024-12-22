@@ -29,24 +29,26 @@ public class ResultControllerImpl implements ResultController {
     }
 
     @Override
-    public String createForm(Model model) {
+    public String createForm(Model model, String raceTeamId, String raceId) {
         ResultCreateForm resultCreateForm = (ResultCreateForm) model.asMap().get("resultCreateForm");
         if (resultCreateForm == null) {
             resultCreateForm = new ResultCreateForm();
         }
         model.addAttribute("resultCreateForm", resultCreateForm);
+        model.addAttribute("raceTeamId", raceTeamId);
+        model.addAttribute("raceId", raceId);
         return "result/result-create";
     }
 
     @Override
-    public String create(ResultCreateForm resultCreateForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String create(ResultCreateForm resultCreateForm, BindingResult bindingResult, Model model, String raceTeamId, String raceId, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("resultCreateForm", resultCreateForm);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.resultCreateForm", bindingResult);
-            return "redirect:/results/create";
+            return "redirect:/results/create?raceTeamId=" + raceTeamId + "&raceId=" + raceId;
         }
-        resultService.createResult(resultCreateForm);
-        return "redirect:/results";  // TODO фикс возврата к объекту
+        resultService.createResult(resultCreateForm, raceTeamId);
+        return "redirect:/races/" + raceId;
     }
 
     @Override

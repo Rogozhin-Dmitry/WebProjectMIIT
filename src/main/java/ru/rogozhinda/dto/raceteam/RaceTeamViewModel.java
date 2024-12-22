@@ -6,13 +6,15 @@ import ru.rogozhinda.dto.result.ResultViewModel;
 import ru.rogozhinda.dto.team.TeamViewModel;
 
 public class RaceTeamViewModel {
+    private String id;
     private TeamViewModel team;
     private DriverViewModel driver;
     private CarViewModel car;
     private ResultViewModel result;
 
 
-    public RaceTeamViewModel(TeamViewModel team, DriverViewModel driver, CarViewModel car, ResultViewModel result) {
+    public RaceTeamViewModel(String id, TeamViewModel team, DriverViewModel driver, CarViewModel car, ResultViewModel result) {
+        this.id = id;
         this.team = team;
         this.driver = driver;
         this.car = car;
@@ -20,6 +22,14 @@ public class RaceTeamViewModel {
     }
 
     public RaceTeamViewModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public TeamViewModel getTeam() {

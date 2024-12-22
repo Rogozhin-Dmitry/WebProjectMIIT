@@ -23,7 +23,7 @@ public interface ResultController {
      * Отображает форму создания результата.
      */
     @GetMapping("/create")
-    String createForm(Model model);
+    String createForm(Model model, @RequestParam("raceTeamId") String raceTeamId, @RequestParam("raceId") String raceId);
 
     /**
      * Обрабатывает создание новой результата.
@@ -32,7 +32,7 @@ public interface ResultController {
     String create(
             @Valid ResultCreateForm resultCreateForm,
             BindingResult bindingResult,
-            Model model,
+            Model model, @RequestParam("raceTeamId") String raceTeamId, @RequestParam("raceId") String raceId,
             RedirectAttributes redirectAttributes
     );
 

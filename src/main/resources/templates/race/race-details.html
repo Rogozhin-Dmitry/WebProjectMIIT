@@ -17,15 +17,31 @@
                 <h4 th:text="'Список телеканалов: ' + ${ raceDetails.broadcasters}"></h4>
 
 
-                <div class="card my-2">
-                    <div class="card-body" th:if="${not #lists.isEmpty(raceDetails.raceTeams)}" th:each="raceTeam : ${raceDetails.raceTeams}" >
+                <div class="card my-2" th:if="${not #lists.isEmpty(raceDetails.raceTeams)}"
+                     th:each="raceTeam : ${raceDetails.raceTeams}">
+                    <div class="card-body">
                         <div class="d-flex flex-column bg-text mb-3">
                             <h5 th:text="'Название: ' + ${raceTeam.team.name} + ', страна: ' + ${raceTeam.team.country}"></h5>
                             <h5 th:text="'Имя: ' + ${raceTeam.driver.name} + ', возраст: ' + ${raceTeam.driver.age} + ', национальность: ' + ${raceTeam.driver.nationality}"></h5>
                             <h5 th:text="'Модель: ' + ${raceTeam.car.model} + ', Год выпуска: ' + ${raceTeam.car.year}"></h5>
+                            <div th:if="${raceTeam.result}">
+                                <h5 th:text="'Позиция: ' + ${raceTeam.result.position} + ', время: ' + ${raceTeam.result.time}"></h5>
+                                <div class="align-bottom me-2">
+                                    <a class="btn btn-success align-bottom"
+                                       th:href="@{/results/{id}(id=${raceTeam.result.id})}">Подробнее</a>
+                                </div>
+                            </div>
+                            <div th:unless="${raceTeam.result}">
+                                <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
+                                        class="btn btn-success align-bottom"
+                                        th:href="@{/results/create(raceTeamId=${raceTeam.id}, raceId=${raceDetails.race.id})}">Добавить результат участнику</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body" th:unless="${not #lists.isEmpty(raceDetails.raceTeams)}">
+                </div>
+                <div class="card my-2" th:unless="${not #lists.isEmpty(raceDetails.raceTeams)}">
+                    <div class="card-body">
                         <h4>Участников пока нет</h4>
                     </div>
                 </div>
@@ -43,7 +59,7 @@
                     th:href="@{/races/{id}/edit(id=${raceDetails.race.id})}">Изменить гонку</a>
             </div>
             <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
-                    class="btn btn-warning align-bottom"
+                    class="btn btn-success align-bottom"
                     th:href="@{/raceteams/create(raceId=${raceDetails.race.id})}">Добавить участника</a>
             </div>
         </div>

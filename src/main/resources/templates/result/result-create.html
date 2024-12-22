@@ -9,7 +9,7 @@
         <div class="card mt-5 mb-5">
             <div class="card-header bg-transparent h2">Создание результат</div>
             <div class="card-body">
-                <form th:action="@{/results/create}"
+                <form th:action="@{/results/create(raceTeamId = ${raceTeamId}, raceId = ${raceId})}"
                       th:method="post"
                       th:object="${resultCreateForm}"
                       class="m-md-auto w-50 pb-3">
