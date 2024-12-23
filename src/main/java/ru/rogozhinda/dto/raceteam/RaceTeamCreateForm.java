@@ -21,27 +21,27 @@ public class RaceTeamCreateForm {
     public RaceTeamCreateForm() {
     }
 
-    public @NotBlank(message = "Нужно обязательно выбрать команду") String getTeamId() {
+    public String getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(@NotBlank(message = "Нужно обязательно выбрать команду") String teamId) {
+    public void setTeamId(String teamId) {
         this.teamId = teamId;
     }
 
-    public @NotBlank(message = "Нужно обязательно выбрать пилота") String getDriverId() {
+    public String getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(@NotBlank(message = "Нужно обязательно выбрать пилота") String driverId) {
+    public void setDriverId(String driverId) {
         this.driverId = driverId;
     }
 
-    public @NotBlank(message = "Нужно обязательно выбрать машину") String getCarId() {
+    public String getCarId() {
         return carId;
     }
 
-    public void setCarId(@NotBlank(message = "Нужно обязательно выбрать машину") String carId) {
+    public void setCarId(String carId) {
         this.carId = carId;
     }
 }

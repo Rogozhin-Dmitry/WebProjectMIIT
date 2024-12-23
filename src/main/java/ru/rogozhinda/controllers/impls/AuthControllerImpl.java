@@ -21,7 +21,7 @@ public class AuthControllerImpl implements AuthController {
 
     private final AuthService authService;
 
-    @Autowired
+    @Autowired  // Типа убрать у всех конструкторов
     public AuthControllerImpl(AuthService authService) {
         this.authService = authService;
     }

@@ -40,7 +40,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Page<TeamViewModel> getTeamsByFilter(Pageable pageable, TeamsSearchForm form) {
-        return teamRepository.findByFilter(pageable, form.getSearchTerm()).map(team -> mapper.map(team, TeamViewModel.class));
+        return teamRepository.findByFilter(pageable, form.getSearchTerm().toLowerCase()).map(team -> mapper.map(team, TeamViewModel.class));
     }
 
     @Override

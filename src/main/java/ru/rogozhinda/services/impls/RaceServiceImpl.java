@@ -36,7 +36,7 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Page<RaceViewModel> getRacesByFilter(Pageable pageable, RacesSearchForm form) {
-        return raceRepository.findByFilter(pageable, form.getSearchTerm()).map(race -> mapper.map(race, RaceViewModel.class));
+        return raceRepository.findByFilter(pageable, form.getSearchTerm().toLowerCase()).map(race -> mapper.map(race, RaceViewModel.class));
     }
 
     @Override

@@ -34,7 +34,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Page<DriverViewModel> getDriversByFilter(Pageable pageable, DriversSearchForm form) {
-        return driverRepository.findByFilter(pageable, form.getSearchTerm()).map(driver -> mapper.map(driver, DriverViewModel.class));
+        return driverRepository.findByFilter(pageable, form.getSearchTerm().toLowerCase()).map(driver -> mapper.map(driver, DriverViewModel.class));
     }
 
     @Override

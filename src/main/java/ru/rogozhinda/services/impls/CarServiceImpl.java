@@ -33,7 +33,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Page<CarViewModel> getCarsByFilter(Pageable pageable, CarsSearchForm form) {
-        return carRepository.findByFilter(pageable, form.getSearchTerm()).map(car -> mapper.map(car, CarViewModel.class));
+        return carRepository.findByFilter(pageable, form.getSearchTerm().toLowerCase()).map(car -> mapper.map(car, CarViewModel.class));
     }
 
     @Override

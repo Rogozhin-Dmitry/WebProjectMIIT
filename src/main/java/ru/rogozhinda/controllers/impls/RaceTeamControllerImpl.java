@@ -45,7 +45,6 @@ public class RaceTeamControllerImpl implements RaceTeamController {
 
         List<CarSmallViewModel> carsList = carService.getCarsSmallAll();
         model.addAttribute("carsList", carsList);
-        System.out.println(carsList);
 
         model.addAttribute("raceteamCreateForm", raceteamCreateForm);
         model.addAttribute("raceId", raceId);

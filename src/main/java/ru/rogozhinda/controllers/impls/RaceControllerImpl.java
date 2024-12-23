@@ -60,7 +60,6 @@ public class RaceControllerImpl implements RaceController {
         if (detailsViewModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
-        System.out.println(detailsViewModel.getRaceTeams().get(0));
         model.addAttribute("raceDetails", detailsViewModel);
         return "race/race-details";
     }
