@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.driver.*;
-import ru.rogozhinda.dto.team.TeamSmallViewModel;
 import ru.rogozhinda.entities.Driver;
 import ru.rogozhinda.entities.Team;
 import ru.rogozhinda.repositories.DriverRepository;
@@ -104,5 +103,10 @@ public class DriverServiceImpl implements DriverService {
             driver.setTeam(team);
         }
         driverRepository.saveAll(drivers);
+    }
+
+    @Override
+    public List<DriverTopViewModel> getTopForHome() {
+        return driverRepository.getTopForHome();
     }
 }

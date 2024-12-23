@@ -8,11 +8,21 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-                <div class="justify-content-center">
-                    <h1>Welcome to Company Application!</h1>
+                <div class="card mt-2">
+                    <div class="card-header bg-transparent h2">Топ 5 самых результативных гонщиков за сезон</div>
+                    <div class="card-body">
+                        <div th:each="driver : ${topFiveDrivers}">
+                            <h4 th:text="${driver.name}  + ', ' + ${driver.age}  + ', ' + ${driver.nationality} + ', ' + ${driver.points}" ></h4>
+                        </div>
+                    </div>
                 </div>
-                <div><span th:text="'Last update of Database:'"></span>&nbsp;
-                    <span th:text="${#dates.createNow()}"></span>
+                <div class="card mt-2">
+                    <div class="card-header bg-transparent h2">Ближайшие гонки</div>
+                    <div class="card-body">
+                        <div th:each="race : ${nextRaces}">
+                            <h4 th:text="${race.name}  + ', ' + ${race.location}  + ', ' + ${race.duration} + ', ' + ${#dates.format(race.date, 'dd-MMM-yyyy')}" ></h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

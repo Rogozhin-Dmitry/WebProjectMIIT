@@ -8,6 +8,8 @@ import ru.rogozhinda.dto.race.RaceViewModel;
 import ru.rogozhinda.dto.race.RacesSearchForm;
 import ru.rogozhinda.entities.Race;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface RaceService {
@@ -28,4 +30,6 @@ public interface RaceService {
     void deleteRace(String id);
 
     void saveAllRaces(List<Race> races);
+
+    List<RaceViewModel> getNextRaces();
 }

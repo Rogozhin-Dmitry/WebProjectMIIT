@@ -15,6 +15,8 @@ import ru.rogozhinda.entities.Race;
 import ru.rogozhinda.repositories.RaceRepository;
 import ru.rogozhinda.services.RaceService;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +83,12 @@ public class RaceServiceImpl implements RaceService {
     @Override
     public void saveAllRaces(List<Race> races) {
         raceRepository.saveAll(races);
+    }
+
+    @Override
+    public List<RaceViewModel> getNextRaces() {
+        LocalDate todayLocal = LocalDate.now();
+        return raceRepository.getNextRaces(new Date(todayLocal.getYear() - 1900, todayLocal.getMonth().getValue(), todayLocal.getDayOfMonth()));
     }
 
     private RaceDetailsViewModel mapRaceDetail(Race race) {

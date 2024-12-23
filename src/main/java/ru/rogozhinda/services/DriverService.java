@@ -33,4 +33,5 @@ public interface DriverService {
 
     void setDrivers(Team team, List<String> teamDriversIds);
 
+    List<DriverTopViewModel> getTopForHome();
 }
