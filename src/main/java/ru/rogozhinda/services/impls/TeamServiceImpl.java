@@ -1,7 +1,6 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,8 @@ import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.car.CarSmallViewModel;
 import ru.rogozhinda.dto.driver.DriverSmallViewModel;
 import ru.rogozhinda.dto.team.*;
+import ru.rogozhinda.entities.Car;
+import ru.rogozhinda.entities.Driver;
 import ru.rogozhinda.entities.Team;
 import ru.rogozhinda.repositories.TeamRepository;
 import ru.rogozhinda.services.CarService;
@@ -25,7 +26,6 @@ public class TeamServiceImpl implements TeamService {
     private final CarService carService;
     private final ModelMapper mapper;
 
-    @Autowired
     public TeamServiceImpl(TeamRepository teamRepository, DriverService driverService, CarService carService) {
         this.teamRepository = teamRepository;
         this.driverService = driverService;
@@ -86,6 +86,16 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void deleteTeam(String id) {
+        Optional<Team> teamOptional = teamRepository.findById(id);
+        if (teamOptional.isPresent()) {
+            Team team = teamOptional.get();
+            for (Car car : team.getCars()) {
+                car.setTeam(null);
+            }
+            for (Driver driver : team.getDrivers()) {
+                driver.setTeam(null);
+            }
+        }
         teamRepository.deleteById(id);
     }
 

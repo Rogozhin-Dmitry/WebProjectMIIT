@@ -67,7 +67,15 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public void deleteResult(String id) {
+        Optional<Result> result = resultRepository.findById(id);
+        result.ifPresent(value -> value.getRaceTeam().setResult(null));
         resultRepository.deleteById(id);
+    }
+
+    @Override
+    public String getResultRaceId(String id) {
+        Optional<Result> result = resultRepository.findById(id);
+        return result.map(value -> value.getRaceTeam().getRace().getId()).orElse("");
     }
 
     @Override

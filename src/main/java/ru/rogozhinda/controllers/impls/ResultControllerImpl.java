@@ -79,8 +79,9 @@ public class ResultControllerImpl implements ResultController {
 
     @Override
     public String delete(String id) {
+        String raceId = resultService.getResultRaceId(id);
         resultService.deleteResult(id);
-        return "redirect:/results"; // TODO фикс возврата к объекту
+        return "redirect:/races/" + raceId;
     }
 
 }

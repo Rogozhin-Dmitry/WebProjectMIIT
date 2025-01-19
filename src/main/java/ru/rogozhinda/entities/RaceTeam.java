@@ -1,9 +1,6 @@
 package ru.rogozhinda.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "races_teams")
@@ -61,7 +58,7 @@ public class RaceTeam extends BaseEntity {
         this.car = car;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     public Result getResult() {
         return result;
     }

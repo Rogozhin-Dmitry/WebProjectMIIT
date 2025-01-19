@@ -26,7 +26,7 @@
                         <h4 th:text="'Название: ' + ${ race.name}"></h4>
                         <h4 th:text="'Место проведения: ' + ${ race.location}"></h4>
                         <h4 th:text="'Длительность: ' + ${ race.duration}"></h4>
-                        <h4 th:text="'Дата проведения: ' + ${ race.date}"></h4>
+                        <h4 th:text="'Дата проведения: ' + ${#dates.format(race.date, 'dd-MMM-yyyy')}"></h4>
                     </div>
 
                     <div class="card-footer bg-transparent">

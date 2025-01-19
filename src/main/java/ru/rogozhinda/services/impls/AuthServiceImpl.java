@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void register(UserRegistrationDto registrationDTO) {
         if (!registrationDTO.getPassword().equals(registrationDTO.getConfirmPassword())) {
-            throw new RuntimeException("passwords.match");  // TODO добавить красивые эксепшены
+            throw new RuntimeException("passwords.match");
         }
 
         Optional<User> byEmail = this.userRepository.findByEmail(registrationDTO.getEmail());

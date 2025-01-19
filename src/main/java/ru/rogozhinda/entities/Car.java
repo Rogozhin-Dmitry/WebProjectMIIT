@@ -83,7 +83,7 @@ public class Car extends BaseEntity {
         this.team = team;
     }
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE)
     public Set<RaceTeam> getDriverCars() {
         return driverCars;
     }

@@ -12,13 +12,13 @@
                 <h4 th:text="'Название: ' + ${ raceDetails.race.name}"></h4>
                 <h4 th:text="'Место проведения: ' + ${ raceDetails.race.location}"></h4>
                 <h4 th:text="'Длительность: ' + ${ raceDetails.race.duration}"></h4>
-                <h4 th:text="'Дата проведения: ' + ${ raceDetails.race.date}"></h4>
+                <h4 th:text="'Дата проведения: ' + ${#dates.format(raceDetails.race.date, 'dd-MMM-yyyy')} "></h4>
                 <h4 th:text="'Название трассы: ' + ${ raceDetails.circuit}"></h4>
                 <h4 th:text="'Список телеканалов: ' + ${ raceDetails.broadcasters}"></h4>
 
 
                 <div class="card my-2" th:if="${not #lists.isEmpty(raceDetails.raceTeams)}"
-                     th:each="raceTeam : ${raceDetails.raceTeams}">
+                     th:each="raceTeam  : ${raceDetails.raceTeams}">
                     <div class="card-body">
                         <div class="d-flex flex-column bg-text mb-3">
                             <h5 th:text="'Название: ' + ${raceTeam.team.name} + ', страна: ' + ${raceTeam.team.country}"></h5>
@@ -30,12 +30,20 @@
                                     <a class="btn btn-success align-bottom"
                                        th:href="@{/results/{id}(id=${raceTeam.result.id})}">Подробнее</a>
                                 </div>
+                                <div class="align-bottom mt-2" sec:authorize="hasAnyRole('ADMIN')"><a
+                                        class="btn btn-danger align-bottom"
+                                        th:href="@{/results/{id}/delete(id=${raceTeam.result.id})}">Удалить результат</a>
+                                </div>
                             </div>
                             <div th:unless="${raceTeam.result}">
                                 <div class="align-bottom me-2" sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')"><a
                                         class="btn btn-success align-bottom"
                                         th:href="@{/results/create(raceTeamId=${raceTeam.id}, raceId=${raceDetails.race.id})}">Добавить результат участнику</a>
                                 </div>
+                            </div>
+                            <div class="align-bottom mt-2" sec:authorize="hasAnyRole('ADMIN')"><a
+                                    class="btn btn-danger align-bottom"
+                                    th:href="@{/raceteams/{id}/delete(id=${raceTeam.id}, raceId=${raceDetails.race.id})}">Удалить участника</a>
                             </div>
                         </div>
                     </div>

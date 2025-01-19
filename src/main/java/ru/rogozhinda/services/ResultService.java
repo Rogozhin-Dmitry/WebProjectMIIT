@@ -17,5 +17,7 @@ public interface ResultService {
 
     void deleteResult(String id);
 
+    String getResultRaceId(String id);
+
     void saveAllResults(List<Result> results);
 }

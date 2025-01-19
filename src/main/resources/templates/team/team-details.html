@@ -13,7 +13,7 @@
                 <h4 th:text="'Страна основания: ' + ${teamDetails.team.country}"></h4>
                 <h4 th:text="'Количество трофеев: ' + ${teamDetails.team.trophies}"></h4>
                 <h4 th:text="'Количество очков: ' + ${teamDetails.team.points}"></h4>
-                <h4 th:text="'Дата основания: ' + ${teamDetails.team.founded}"></h4>
+                <h4 th:text="'Дата основания: ' + ${#dates.format(teamDetails.team.founded, 'dd-MMM-yyyy')}"></h4>
             </div>
 
             <div class="card my-2">

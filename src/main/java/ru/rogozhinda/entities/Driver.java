@@ -117,7 +117,7 @@ public class Driver extends BaseEntity {
         this.team = team;
     }
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.REMOVE)
     public Set<RaceTeam> getDriverCars() {
         return driverCars;
     }

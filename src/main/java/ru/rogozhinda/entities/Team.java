@@ -1,9 +1,6 @@
 package ru.rogozhinda.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -98,7 +95,7 @@ public class Team extends BaseEntity {
         this.cars = cars;
     }
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.REMOVE)
     public Set<RaceTeam> getRaceTeams() {
         return raceTeams;
     }

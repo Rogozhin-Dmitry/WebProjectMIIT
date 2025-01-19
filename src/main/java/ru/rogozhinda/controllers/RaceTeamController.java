@@ -53,5 +53,5 @@ public interface RaceTeamController {
      * Обрабатывает удаление промежуточной таблицы.
      */
     @GetMapping("/{id}/delete")
-    String delete(@PathVariable String id);
+    String delete(@PathVariable String id, @RequestParam("raceId") String raceId);
 }

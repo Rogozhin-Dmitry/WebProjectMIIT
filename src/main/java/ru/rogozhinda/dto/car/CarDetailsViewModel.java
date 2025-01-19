@@ -3,7 +3,7 @@ package ru.rogozhinda.dto.car;
 import ru.rogozhinda.dto.base.BaseViewModel;
 
 public class CarDetailsViewModel {
-    private BaseViewModel base; // TODO посмотреть на говно
+    private BaseViewModel base;
     private CarViewModel car;
     private String engine;
     private Integer weight;

@@ -89,9 +89,9 @@ public class RaceTeamControllerImpl implements RaceTeamController {
     }
 
     @Override
-    public String delete(String id) {
+    public String delete(String id, String raceId) {
         raceteamService.deleteRaceTeam(id);
-        return "redirect:/raceteams"; // TODO
+        return "redirect:/races/" + raceId;
     }
 
 }

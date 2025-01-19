@@ -26,7 +26,7 @@
                         <h4 th:text="'Страна основания: ' + ${ team.country}"></h4>
                         <h4 th:text="'Количество трофеев: ' + ${ team.trophies}"></h4>
                         <h4 th:text="'Количество очков: ' + ${ team.points}"></h4>
-                        <h4 th:text="'Дата основания: ' + ${ team.founded}"></h4>
+                        <h4 th:text="'Дата основания: ' + ${#dates.format(team.founded, 'dd-MMM-yyyy')}"></h4>
                     </div>
                     <div class="card-footer bg-transparent">
                         <div class="d-flex flex-row-reverse">

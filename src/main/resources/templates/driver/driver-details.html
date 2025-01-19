@@ -16,7 +16,7 @@
                 <h4 th:text="'Количество очков: ' + ${ driverDetails.driver.points}"></h4>
                 <h4 th:text="'Рост: ' + ${driverDetails.height}"></h4>
                 <h4 th:text="'Вес: ' + ${driverDetails.weight}"></h4>
-                <h4 th:text="'День рождения: ' + ${driverDetails.birthday}"></h4>
+                <h4 th:text="'День рождения: ' +  ${#dates.format(driverDetails.birthday, 'dd-MMM-yyyy')}"></h4>
             </div>
         </div>
 
