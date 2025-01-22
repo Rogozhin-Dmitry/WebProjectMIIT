@@ -1,7 +1,6 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,6 @@ public class RaceServiceImpl implements RaceService {
     private final RaceRepository raceRepository;
     private final ModelMapper mapper;
 
-    @Autowired
     public RaceServiceImpl(RaceRepository raceRepository) {
         this.raceRepository = raceRepository;
         this.mapper = new ModelMapper();

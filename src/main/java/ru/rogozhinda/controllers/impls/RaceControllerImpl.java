@@ -1,6 +1,8 @@
 package ru.rogozhinda.controllers.impls;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,13 @@ import ru.rogozhinda.services.RaceService;
 
 @Controller
 public class RaceControllerImpl implements RaceController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private static final int pageSize = 5;
+    private final RaceService raceService;
 
-    @Autowired
-    private RaceService raceService;
+    public RaceControllerImpl(RaceService raceService) {
+        this.raceService = raceService;
+    }
 
     @Override
     public String listRaces(Integer page, Model model) {
@@ -41,6 +46,7 @@ public class RaceControllerImpl implements RaceController {
                 model.addAttribute("racesSearchError", "not found");
             }
         }
+        LOG.log(Level.INFO, "getСarList");
         model.addAttribute("raceList", raceList);
         model.addAttribute("pageCount", Math.ceil((double) raceService.countRaces() / pageSize));
         model.addAttribute("currentPage", page);
@@ -60,6 +66,7 @@ public class RaceControllerImpl implements RaceController {
         if (detailsViewModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
+        LOG.log(Level.INFO, "getRaceDetails " + id);
         model.addAttribute("raceDetails", detailsViewModel);
         return "race/race-details";
     }
@@ -70,6 +77,7 @@ public class RaceControllerImpl implements RaceController {
         if (raceCreateForm == null) {
             raceCreateForm = new RaceCreateForm();
         }
+        LOG.log(Level.INFO, "GetRaceCreate");
         model.addAttribute("raceCreateForm", raceCreateForm);
         return "race/race-create";
     }
@@ -81,6 +89,7 @@ public class RaceControllerImpl implements RaceController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.raceCreateForm", bindingResult);
             return "redirect:/races/create";
         }
+        LOG.log(Level.INFO, "PostRaceCreate");
         raceService.createRace(raceCreateForm);
         return "redirect:/races";
     }
@@ -94,6 +103,7 @@ public class RaceControllerImpl implements RaceController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
             }
         }
+        LOG.log(Level.INFO, "GetRaceEdit");
         model.addAttribute("raceEditForm", raceEditForm);
         model.addAttribute("raceEditId", id);
         return "race/race-edit";
@@ -107,6 +117,7 @@ public class RaceControllerImpl implements RaceController {
             model.addAttribute("raceEditId", id);
             return "redirect:/races/" + id + "/edit";
         }
+        LOG.log(Level.INFO, "PostRaceEdit" + id);
         raceService.editRace(id, raceEditForm);
         return "redirect:/races/" + id;
     }
@@ -114,6 +125,7 @@ public class RaceControllerImpl implements RaceController {
     @Override
     public String delete(String id) {
         raceService.deleteRace(id);
+        LOG.log(Level.INFO, "GetRaceDelete" + id);
         return "redirect:/races";
     }
 

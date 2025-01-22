@@ -1,13 +1,11 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.raceteam.RaceTeamCreateForm;
-import ru.rogozhinda.entities.Race;
 import ru.rogozhinda.entities.RaceTeam;
 import ru.rogozhinda.repositories.*;
-import ru.rogozhinda.services.*;
+import ru.rogozhinda.services.RaceTeamService;
 
 import java.util.List;
 
@@ -22,7 +20,6 @@ public class RaceTeamServiceImpl implements RaceTeamService {
     private final RaceRepository raceRepository;
 
 
-    @Autowired
     public RaceTeamServiceImpl(RaceTeamRepository raceteamRepository, TeamRepository teamRepository, DriverRepository driverRepository, CarRepository carRepository, RaceRepository raceRepository) {
         this.raceteamRepository = raceteamRepository;
         this.teamRepository = teamRepository;

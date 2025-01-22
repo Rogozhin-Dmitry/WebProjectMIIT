@@ -1,7 +1,6 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class DriverServiceImpl implements DriverService {
     private final DriverRepository driverRepository;
     private final ModelMapper mapper;
 
-    @Autowired
     public DriverServiceImpl(DriverRepository driverRepository) {
         this.driverRepository = driverRepository;
         this.mapper = new ModelMapper();

@@ -1,7 +1,6 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rogozhinda.dto.base.BaseViewModel;
 import ru.rogozhinda.dto.result.ResultCreateForm;
@@ -20,10 +19,8 @@ import java.util.Optional;
 public class ResultServiceImpl implements ResultService {
     private final ResultRepository resultRepository;
     private final RaceTeamRepository raceTeamRepository;
-
     private final ModelMapper mapper;
 
-    @Autowired
     public ResultServiceImpl(ResultRepository resultRepository, RaceTeamRepository raceTeamRepository) {
         this.resultRepository = resultRepository;
         this.raceTeamRepository = raceTeamRepository;

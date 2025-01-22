@@ -2,6 +2,8 @@ package ru.rogozhinda.controllers;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,12 @@ import ru.rogozhinda.dto.driver.DriversSearchForm;
 
 // Контракт контроллера водителей
 @RequestMapping("/drivers")
+@EnableCaching
 public interface DriverController {
     /**
      * Отображает список водителей с фильтрацией и пагинацией.
      */
+    @Cacheable("drivers")
     @GetMapping
     String listDrivers(
             @RequestParam(defaultValue = "0") @Min(0) Integer page,

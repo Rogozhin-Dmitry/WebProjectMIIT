@@ -2,6 +2,8 @@ package ru.rogozhinda.controllers;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,12 @@ import ru.rogozhinda.dto.car.CarsSearchForm;
 
 // Контракт контроллера гоночных машин
 @RequestMapping("/cars")
+@EnableCaching
 public interface CarController {
     /**
      * Отображает список гоночных машин с фильтрацией и пагинацией.
      */
+    @Cacheable("races")
     @GetMapping
     String listCars(
             @RequestParam(defaultValue = "0") @Min(0) Integer page,

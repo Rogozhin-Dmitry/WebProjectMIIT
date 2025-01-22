@@ -2,6 +2,8 @@ package ru.rogozhinda.controllers;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,12 @@ import ru.rogozhinda.dto.team.TeamsSearchForm;
 
 // Контракт контроллера команд
 @RequestMapping("/teams")
+@EnableCaching
 public interface TeamController {
     /**
      * Отображает список команд с фильтрацией и пагинацией.
      */
+    @Cacheable("races")
     @GetMapping
     String listTeams(
             @RequestParam(defaultValue = "0") @Min(0) Integer page,

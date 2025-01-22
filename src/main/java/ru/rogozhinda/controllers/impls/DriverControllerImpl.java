@@ -1,6 +1,8 @@
 package ru.rogozhinda.controllers.impls;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,13 @@ import ru.rogozhinda.services.DriverService;
 
 @Controller
 public class DriverControllerImpl implements DriverController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private static final int pageSize = 5;
+    private final DriverService driverService;
 
-    @Autowired
-    private DriverService driverService;
+    public DriverControllerImpl(DriverService driverService) {
+        this.driverService = driverService;
+    }
 
     @Override
     public String listDrivers(Integer page, Model model) {
@@ -41,6 +46,7 @@ public class DriverControllerImpl implements DriverController {
                 model.addAttribute("driversSearchError", "not found");
             }
         }
+        LOG.log(Level.INFO, "getDriverList");
         model.addAttribute("driverList", driverList);
         model.addAttribute("pageCount", Math.ceil((double) driverService.countDrivers() / pageSize));
         model.addAttribute("currentPage", page);
@@ -60,6 +66,7 @@ public class DriverControllerImpl implements DriverController {
         if (detailsViewModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
+        LOG.log(Level.INFO, "getDriverDetails " + id);
         model.addAttribute("driverDetails", detailsViewModel);
         return "driver/driver-details";
     }
@@ -70,6 +77,7 @@ public class DriverControllerImpl implements DriverController {
         if (driverCreateForm == null) {
             driverCreateForm = new DriverCreateForm();
         }
+        LOG.log(Level.INFO, "GetDriverCreate");
         model.addAttribute("driverCreateForm", driverCreateForm);
         return "driver/driver-create";
     }
@@ -81,6 +89,7 @@ public class DriverControllerImpl implements DriverController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.driverCreateForm", bindingResult);
             return "redirect:/drivers/create";
         }
+        LOG.log(Level.INFO, "PostDriverCreate");
         driverService.createDriver(driverCreateForm);
         return "redirect:/drivers";
     }
@@ -94,6 +103,7 @@ public class DriverControllerImpl implements DriverController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
             }
         }
+        LOG.log(Level.INFO, "GetDriverEdit");
         model.addAttribute("driverEditForm", driverEditForm);
         model.addAttribute("driverEditId", id);
         return "driver/driver-edit";
@@ -107,6 +117,7 @@ public class DriverControllerImpl implements DriverController {
             model.addAttribute("driverEditId", id);
             return "redirect:/drivers/" + id + "/edit";
         }
+        LOG.log(Level.INFO, "PostDriverEdit" + id);
         driverService.editDriver(id, driverEditForm);
         return "redirect:/drivers/" + id;
     }
@@ -114,6 +125,7 @@ public class DriverControllerImpl implements DriverController {
     @Override
     public String delete(String id) {
         driverService.deleteDriver(id);
+        LOG.log(Level.INFO, "GetDriverDelete" + id);
         return "redirect:/drivers";
     }
 

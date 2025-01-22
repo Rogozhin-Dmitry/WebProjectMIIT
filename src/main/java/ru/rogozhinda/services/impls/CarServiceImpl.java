@@ -1,7 +1,6 @@
 package ru.rogozhinda.services.impls;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final ModelMapper mapper;
 
-    @Autowired
     public CarServiceImpl(CarRepository carRepository) {
         this.carRepository = carRepository;
         this.mapper = new ModelMapper();

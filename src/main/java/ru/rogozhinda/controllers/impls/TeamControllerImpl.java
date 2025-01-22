@@ -1,6 +1,8 @@
 package ru.rogozhinda.controllers.impls;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -25,14 +27,17 @@ import java.util.List;
 
 @Controller
 public class TeamControllerImpl implements TeamController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     private static final int pageSize = 5;
+    private final TeamService teamService;
+    private final DriverService driverService;
+    private final CarService carService;
 
-    @Autowired
-    private TeamService teamService;
-    @Autowired
-    private DriverService driverService;
-    @Autowired
-    private CarService carService;
+    public TeamControllerImpl(TeamService teamService, DriverService driverService, CarService carService) {
+        this.teamService = teamService;
+        this.driverService = driverService;
+        this.carService = carService;
+    }
 
     private static List<Boolean> getBooleansDrivers(List<Boolean> teamCreateList, List<DriverSmallViewModel> driversList) {
         List<Boolean> driverIds;
@@ -118,6 +123,7 @@ public class TeamControllerImpl implements TeamController {
                 model.addAttribute("teamsSearchError", "not found");
             }
         }
+        LOG.log(Level.INFO, "getTeamList");
         model.addAttribute("teamList", teamList);
         model.addAttribute("pageCount", Math.ceil((double) teamService.countTeams() / pageSize));
         model.addAttribute("currentPage", page);
@@ -138,6 +144,7 @@ public class TeamControllerImpl implements TeamController {
         if (detailsViewModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
+        LOG.log(Level.INFO, "getTeamDetails " + id);
         model.addAttribute("teamDetails", detailsViewModel);
         return "team/team-details";
     }
@@ -159,6 +166,7 @@ public class TeamControllerImpl implements TeamController {
         model.addAttribute("carsList", carsList);
 
         model.addAttribute("teamCreateForm", teamCreateForm);
+        LOG.log(Level.INFO, "GetTeamCreate");
         return "team/team-create";
     }
 
@@ -174,6 +182,7 @@ public class TeamControllerImpl implements TeamController {
                 getDriversByBooleansDrivers(teamCreateForm.getDriverIds(), driverService.getDriversSmall()),
                 getDriversByBooleansCars(teamCreateForm.getCarIds(), carService.getCarsSmall())
         );
+        LOG.log(Level.INFO, "PostTeamCreate");
         return "redirect:/teams";
     }
 
@@ -186,6 +195,7 @@ public class TeamControllerImpl implements TeamController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
             }
         }
+        LOG.log(Level.INFO, "GetTeamEdit");
         model.addAttribute("teamEditForm", teamEditForm);
         model.addAttribute("teamEditId", id);
         return "team/team-edit";
@@ -200,6 +210,7 @@ public class TeamControllerImpl implements TeamController {
             model.addAttribute("teamEditId", id);
             return "redirect:/teams/" + id + "/edit";
         }
+        LOG.log(Level.INFO, "PostTeamEdit" + id);
         teamService.editTeam(id, teamEditForm);
         return "redirect:/teams/" + id;
     }
@@ -207,6 +218,7 @@ public class TeamControllerImpl implements TeamController {
     @Override
     public String delete(String id) {
         teamService.deleteTeam(id);
+        LOG.log(Level.INFO, "GetTeamDelete" + id);
         return "redirect:/teams";
     }
 

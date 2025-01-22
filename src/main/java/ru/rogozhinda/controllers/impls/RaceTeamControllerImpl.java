@@ -1,6 +1,8 @@
 package ru.rogozhinda.controllers.impls;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +20,18 @@ import java.util.List;
 
 @Controller
 public class RaceTeamControllerImpl implements RaceTeamController {
-    @Autowired
-    private RaceTeamService raceteamService;
-    @Autowired
-    private TeamService teamService;
-    @Autowired
-    private CarService carService;
-    @Autowired
-    private DriverService driverService;
-    @Autowired
-    private ResultService resultService;
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
+    private final RaceTeamService raceteamService;
+    private final TeamService teamService;
+    private final CarService carService;
+    private final DriverService driverService;
 
+    public RaceTeamControllerImpl(RaceTeamService raceteamService, TeamService teamService, CarService carService, DriverService driverService, ResultService resultService) {
+        this.raceteamService = raceteamService;
+        this.teamService = teamService;
+        this.carService = carService;
+        this.driverService = driverService;
+    }
 
     @Override
     public String createForm(Model model, String raceId) {
@@ -48,6 +51,7 @@ public class RaceTeamControllerImpl implements RaceTeamController {
 
         model.addAttribute("raceteamCreateForm", raceteamCreateForm);
         model.addAttribute("raceId", raceId);
+        LOG.log(Level.INFO, "GetRaceTeamCreate");
         return "raceteam/raceteam-create";
     }
 
@@ -58,6 +62,7 @@ public class RaceTeamControllerImpl implements RaceTeamController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.raceteamCreateForm", bindingResult);
             return "redirect:/raceteams/create?raceId=" + raceId;
         }
+        LOG.log(Level.INFO, "PostRaceTeamCreate");
         raceteamService.createRaceTeam(raceteamCreateForm, raceId);
         return "redirect:/races/" + raceId;
     }
@@ -71,6 +76,7 @@ public class RaceTeamControllerImpl implements RaceTeamController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
             }
         }
+        LOG.log(Level.INFO, "GetRaceTeamEdit");
         model.addAttribute("raceteamEditForm", raceteamEditForm);
         model.addAttribute("raceteamEditId", id);
         return "raceteam/raceteam-edit";
@@ -84,6 +90,7 @@ public class RaceTeamControllerImpl implements RaceTeamController {
             model.addAttribute("raceteamEditId", id);
             return "redirect:/raceteams/" + id + "/edit";
         }
+        LOG.log(Level.INFO, "PostRaceTeamEdit" + id);
         raceteamService.editRaceTeam(id, raceteamEditForm);
         return "redirect:/raceteams/" + id;
     }
@@ -91,6 +98,7 @@ public class RaceTeamControllerImpl implements RaceTeamController {
     @Override
     public String delete(String id, String raceId) {
         raceteamService.deleteRaceTeam(id);
+        LOG.log(Level.INFO, "GetRaceTeamDelete" + id);
         return "redirect:/races/" + raceId;
     }
 

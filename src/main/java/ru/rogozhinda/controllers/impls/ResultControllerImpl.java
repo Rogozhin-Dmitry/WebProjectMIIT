@@ -1,6 +1,8 @@
 package ru.rogozhinda.controllers.impls;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +16,12 @@ import ru.rogozhinda.services.ResultService;
 
 @Controller
 public class ResultControllerImpl implements ResultController {
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
+    private final ResultService resultService;
 
-    @Autowired
-    private ResultService resultService;
+    public ResultControllerImpl(ResultService resultService) {
+        this.resultService = resultService;
+    }
 
     @Override
     public String details(String id, Model model) {
@@ -24,6 +29,7 @@ public class ResultControllerImpl implements ResultController {
         if (detailsViewModel == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
         }
+        LOG.log(Level.INFO, "getResultList");
         model.addAttribute("resultDetails", detailsViewModel);
         return "result/result-details";
     }
@@ -34,6 +40,7 @@ public class ResultControllerImpl implements ResultController {
         if (resultCreateForm == null) {
             resultCreateForm = new ResultCreateForm();
         }
+        LOG.log(Level.INFO, "GetResultCreate");
         model.addAttribute("resultCreateForm", resultCreateForm);
         model.addAttribute("raceTeamId", raceTeamId);
         model.addAttribute("raceId", raceId);
@@ -47,6 +54,7 @@ public class ResultControllerImpl implements ResultController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.resultCreateForm", bindingResult);
             return "redirect:/results/create?raceTeamId=" + raceTeamId + "&raceId=" + raceId;
         }
+        LOG.log(Level.INFO, "PostResultCreate");
         resultService.createResult(resultCreateForm, raceTeamId);
         return "redirect:/races/" + raceId;
     }
@@ -60,6 +68,7 @@ public class ResultControllerImpl implements ResultController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found");
             }
         }
+        LOG.log(Level.INFO, "GetResultEdit");
         model.addAttribute("resultEditForm", resultEditForm);
         model.addAttribute("resultEditId", id);
         return "result/result-edit";
@@ -74,6 +83,7 @@ public class ResultControllerImpl implements ResultController {
             return "redirect:/results/" + id + "/edit";
         }
         resultService.editResult(id, resultEditForm);
+        LOG.log(Level.INFO, "PostResultEdit" + id);
         return "redirect:/results/" + id;
     }
 
@@ -81,6 +91,7 @@ public class ResultControllerImpl implements ResultController {
     public String delete(String id) {
         String raceId = resultService.getResultRaceId(id);
         resultService.deleteResult(id);
+        LOG.log(Level.INFO, "GetResultDelete" + id);
         return "redirect:/races/" + raceId;
     }
 
