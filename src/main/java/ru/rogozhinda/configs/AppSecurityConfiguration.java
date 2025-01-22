@@ -36,15 +36,17 @@ public class AppSecurityConfiguration {
                                         .permitAll()
                                         .requestMatchers("/favicon.ico").permitAll()
                                         .requestMatchers("/error").permitAll()
-                                        .requestMatchers("/*").permitAll()
-                                        .requestMatchers("/*/*").permitAll()
-                                        .requestMatchers("/*/*/*").permitAll()
-                                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error")
-                                        .permitAll().
+                                        .requestMatchers("/users/login", "/users/register", "/users/login-error")
+                                        .permitAll()
+                                        .requestMatchers("/", "/cars", "/drivers", "/races", "/teams").permitAll().
                                         requestMatchers("/users/profile").authenticated().
-// TODO добавить
-//                                        requestMatchers("/employees/add", "/employees/employee-delete/").hasAnyRole(UserRoles.MODERATOR.name(), UserRoles.ADMIN.name()).
-//                                        requestMatchers("/companies/company-delete/").hasRole(UserRoles.ADMIN.name()).
+                                        requestMatchers("/cars/{}", "/drivers/{}", "/races/{}", "/teams/{}", "/results/{}").authenticated().
+                                        requestMatchers("/cars/{}/edit", "/drivers/{}/edit", "/races/{}/edit", "/teams/{}/edit",
+                                                "/results/{}/edit", "/raceteams/{}/edit").hasAnyRole(UserRoles.MODERATOR.name(), UserRoles.ADMIN.name()).
+                                        requestMatchers("/cars/create", "/drivers/create", "/races/create", "/teams/create",
+                                                "/results/create", "/raceteams/create").hasAnyRole(UserRoles.MODERATOR.name(), UserRoles.ADMIN.name()).
+                                        requestMatchers("/cars/{}/delete", "/drivers/{}/delete", "/races/{}/delete",
+                                                "/teams/{}/delete", "/results/{}/delete", "/raceteams/{}/delete").hasRole(UserRoles.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(

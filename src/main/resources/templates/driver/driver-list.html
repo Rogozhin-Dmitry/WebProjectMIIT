@@ -55,7 +55,11 @@
                             </a>
                         </li>
                         <li th:class="${page == currentPage + 1} ? 'page-item active' : 'page-item'"
-                            th:each="page : ${#numbers.sequence(currentPage < 5 ? 1 : pageCount - currentPage < 6 ? (pageCount >= 11 ? pageCount - 10 : 1) : currentPage - 4, pageCount - currentPage < 6 ? pageCount : currentPage < 5 ? (pageCount >= 11 ? 11 : pageCount) : currentPage + 6)}">
+                            th:each="page : ${#numbers.sequence(currentPage < 5 ?
+                             1 : pageCount - currentPage < 6 ?
+                              (pageCount >= 11 ? pageCount - 10 : 1) :
+                               currentPage - 4, pageCount - currentPage < 6 ?
+                                pageCount : currentPage < 5 ? (pageCount >= 11 ? 11 : pageCount) : currentPage + 6)}">
                             <a class="page-link" th:href="@{/drivers(page=${page - 1})}" th:text="${page}">1</a>
                         </li>
                         <li th:class="${currentPage == pageCount - 1} ? 'page-item disabled' : 'page-item'">
